@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="opencvjar-runtime-3.0.0-natives-windows-x86_64">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/target/lib/opencvjar-runtime-3.0.0-natives-windows-x86_64.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="jar://$PROJECT_DIR$/target/lib/opencvjar-runtime-3.0.0-natives-windows-x86_64.jar!/" recursive="false" />
+  </library>
+</component>
