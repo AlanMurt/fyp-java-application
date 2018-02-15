@@ -19,34 +19,52 @@ public class App
 
       System.out.println("Welcome to OpenCV " + Core.VERSION);
 
-      VideoCapture webcam = new VideoCapture(0);
-      webcam.open(0);
-      if (webcam.isOpened()) {
-          System.out.println("Camera Working");
+      VideoCapture webcam1 = new VideoCapture(0);
+          webcam1.open(0);
+          if (webcam1.isOpened()) {
+              System.out.println("Camera 1 Working");
+
+              VideoCapture webcam2 = new VideoCapture(0);
+              webcam2.open(1);
+              if (webcam2.isOpened()) {
+                  System.out.println("Camera 2 Working");
 
 
-          List<Mat> list = new ArrayList<Mat>();
+                  List<Mat> list1 = new ArrayList<Mat>();
+                  List<Mat> list2 = new ArrayList<Mat>();
 
-          //Mat is the container for the image
-          Mat frame = new Mat();
+                  //Mat is the container for the image
+                  Mat frame = new Mat();
 
           for (int i = 0; i <= 30; i++) {
               //stores frame taken in mat container
-              webcam.read(frame);
+              webcam1.read(frame);
               //converts frame to gray
               Imgproc.cvtColor(frame, frame, Imgproc.COLOR_RGB2GRAY);
               // Imgcodecs.imwrite("frameCaptured" + i + ".jpg", grayFrame);
-              list.add(frame);
+              list1.add(frame);
+              Imgcodecs.imwrite("images/image + " + i + ".jpg", list1.get(i) );
           }
 
+                  for (int j = 0; j <= 30; j++) {
+                      //stores frame taken in mat container
+                      webcam2.read(frame);
+                      //converts frame to gray
+                      Imgproc.cvtColor(frame, frame, Imgproc.COLOR_RGB2GRAY);
+                      // Imgcodecs.imwrite("frameCaptured" + i + ".jpg", grayFrame);
+                      list2.add(frame);
+                      Imgcodecs.imwrite("images/image + " + j + ".jpg", list2.get(j) );
+                  }
 
+/*
           Mat diffFrame = new Mat();
 
           Core.subtract(list.get(1), list.get(0), diffFrame);
-          Imgcodecs.imwrite("images/diffFrame.jpg", diffFrame);
+          */
+         // Imgcodecs.imwrite("images/diffFrame.jpg", list.get(1) );
 
 
-      } else {
+              }} else {
           System.out.println("Camera Error");
       }
 
