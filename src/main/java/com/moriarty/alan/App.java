@@ -17,61 +17,48 @@ public class App
 
   public static void main(String[] args) {
 
+      //Welcome message
       System.out.println("Welcome to OpenCV " + Core.VERSION);
 
-      VideoCapture webcam1 = new VideoCapture(0);
-          webcam1.open(0);
-          if (webcam1.isOpened()) {
-              System.out.println("Camera 1 Working");
+      //Instantiate and start cameras
+      Camera cam1 = new Camera(0);
+      Camera cam2 = new Camera(1);
+      System.out.println(cam1.start());
+      System.out.println(cam2.start());
 
-              VideoCapture webcam2 = new VideoCapture(0);
-              webcam2.open(1);
-              if (webcam2.isOpened()) {
-                  System.out.println("Camera 2 Working");
+      //Create a Mat object to act as the container for the image/frame
+      Mat frame = new Mat();
 
+     //Create two lists of type Mat, one for each camera to store the images/frames
+      List<Mat> list1 = new ArrayList<Mat>();
+      List<Mat> list2 = new ArrayList<Mat>();
 
-                  List<Mat> list1 = new ArrayList<Mat>();
-                  List<Mat> list2 = new ArrayList<Mat>();
+      for (int i = 0; i <= 30; i++) {
 
-                  //Mat is the container for the image
-                  Mat frame = new Mat();
+          list1.add(cam1.readOneFrame());
 
-          for (int i = 0; i <= 30; i++) {
-              //stores frame taken in mat container
-              webcam1.read(frame);
-              //converts frame to gray
-              Imgproc.cvtColor(frame, frame, Imgproc.COLOR_RGB2GRAY);
-              // Imgcodecs.imwrite("frameCaptured" + i + ".jpg", grayFrame);
-              list1.add(frame);
-              Imgcodecs.imwrite("images/image + " + i + ".jpg", list1.get(i) );
-          }
+      }
 
-                  for (int j = 0; j <= 30; j++) {
-                      //stores frame taken in mat container
-                      webcam2.read(frame);
-                      //converts frame to gray
-                      Imgproc.cvtColor(frame, frame, Imgproc.COLOR_RGB2GRAY);
-                      // Imgcodecs.imwrite("frameCaptured" + i + ".jpg", grayFrame);
-                      list2.add(frame);
-                      Imgcodecs.imwrite("images/image + " + j + ".jpg", list2.get(j) );
-                  }
+      for (int p = 0; p <= 30; p++) {
 
-/*
-          Mat diffFrame = new Mat();
-
-          Core.subtract(list.get(1), list.get(0), diffFrame);
-          */
-         // Imgcodecs.imwrite("images/diffFrame.jpg", list.get(1) );
-
-
-              }} else {
-          System.out.println("Camera Error");
+          list2.add(cam2.readOneFrame());
       }
 
 
+      for(int j = 0; j <list1.size();j++) {
+          Mat temp1Frame = new Mat();
+          Imgproc.cvtColor( list1.get(j), temp1Frame, Imgproc.COLOR_RGB2GRAY);
+          list1.set( j , temp1Frame);
+          Imgcodecs.imwrite("images/image1 + " + j + ".jpg", list1.get(j));
+      }
 
-      //Highgui - High level GUI media input and output
-      //Highgui.imwrite("frameCaptured.jpg", frame);
-      System.out.println("OK");
+      for(int q = 0; q <list2.size();q++) {
+          Mat temp2Frame = new Mat();
+          Imgproc.cvtColor( list2.get(q), temp2Frame, Imgproc.COLOR_RGB2GRAY);
+          list2.set( q , temp2Frame);
+          Imgcodecs.imwrite("images/image2 + " + q + ".jpg", list2.get(q));
+      }
+
+      System.out.println("Done");
   }
 }
